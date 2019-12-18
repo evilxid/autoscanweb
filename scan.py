@@ -9,46 +9,58 @@ from headers import *
 from vulnz import *
 
 print ga.green+'''
-	    X18gICAgICAgICAgX18gIF8gICAgIF9fX19fICAgICAgICAgICAgICAgICBfX19fICAgICAgIA0K
-CSAgICBcIFwgICAgICAgIC8gLyB8IHwgICB8ICBfXyBcICAgICAgICAgICAgICAgfF9fXyBcICAg
-ICAgDQoJICAgICBcIFwgIC9cICAvIC9fX3wgfF9fIHwgfF9fKSB8XyAgICAgIF9fXyBfXyAgIF9f
-KSB8XyBfXyANCgkgICAgICBcIFwvICBcLyAvIF8gXCAnXyBcfCAgX19fL1wgXCAvXCAvIC8gJ18g
-XCB8X18gPHwgJ19ffA0KIAkgICAgICAgXCAgL1wgIC8gIF9fLyB8XykgfCB8ICAgICBcIFYgIFYg
-L3wgfCB8IHxfX18pIHwgfCAgIA0KIAkgICAgICAgIFwvICBcLyBcX19ffF8uX18vfF98ICAgICAg
-XF8vXF8vIHxffCB8X3xfX19fL3xffCAgIA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIA0KICAgICAgICAjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIw0KICAgICAgICAjfCAiQXV0b1Nj
-YW5XZWIiIFdlYiBBcHBsaWNhdGlvbnMgU2VjdXJpdHkgU2Nhbm5lciAgICAgICAgICAgIw0KICAg
-ICAgICAjfCAgQnkgRXYhTC1YaWQgJiBHLUZvcmNlICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIw0KICAgICAgICAjfCAgVGhpcyBWZXJzaW9uIFN1cHBvcnRzIFJlbW90ZSBDb2Rl
-L0NvbW1hbmQgRXhlY3V0aW9uLCBYU1MgIw0KICAgICAgICAjfCAgQW5kIFNRTCBJbmplY3Rpb24u
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIw0KCSN8ICBUaGFua3M6Ly9K
-aXVuIC8vIFZpbnonU2t5IC8vTWluZTcgLy9UdWFuRGVzdHJveSAvL01yIFJpeSAjDQoJI3wgIE1v
-cmUgRGV0YWlsczogaHR0cDovL2dob3N0c2VjLWRvd24uYmxvZ3Nwb3QuY29tLyAgICAgICAgICMN
-CiAgICAgICAgIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMNCiAgICAgICAgJycnK2dhLmVuZA0KDQpkZWYgdXJsc19vcl9saXN0KCk6
-DQoJdXJsX29yX2xpc3QgPSByYXdfaW5wdXQoIiBbIV0gU2NhbiBVUkwgb3IgTGlzdCBvZiBVUkxz
-PyBbMS8yXTogIikNCglpZiB1cmxfb3JfbGlzdCA9PSAiMSI6DQoJIAkgdXJsID0gcmF3X2lucHV0
-KCIgWyFdIEVudGVyIHRoZSBVUkw6ICIpDQoJCSAjaWYgbm90IHVybC5zdGFydHN3aXRoKCJodHRw
-Oi8vIik6DQoJCSAgICAgI1RoYW5rcyB0byBOdTExIGZvciB0aGUgSFRUUCBjaGVja2VyDQogICAg
-ICAgICAgICAgICAgICAgICAjcHJpbnQgZ2EucmVkKycnJ1xuIEludmFsaWQgVVJMLCBQbGVhc2Ug
-TWFrZSBTdXJlIFRoYXQgVGhlIFVSTCBTdGFydHMgV2l0aCBcImh0dHA6Ly9cIiBcbicnJytnYS5l
-bmQNCiAgICAgICAgICAgICAgICAgICAgICNleGl0KCkNCgkJIGlmICI/IiBpbiB1cmw6DQoJCSAJ
-cmNlX2Z1bmModXJsKQ0KCQkgCXhzc19mdW5jKHVybCkNCgkJIAllcnJvcl9iYXNlZF9zcWxpX2Z1
-bmModXJsKQ0KCQkgZWxzZToNCgkJCXByaW50IGdhLnJlZCArIlxuIFtXYXJuaW5nXSAiKyBnYS5l
-bmQgKyBnYS5ib2xkKyIlcyIldXJsICtnYS5lbmQgKyBnYS5yZWQgKyIgaXMgbm90IGEgdmFsaWQg
-VVJMIitnYS5lbmQJCQkNCgkJCXByaW50IGdhLnJlZCArIiBbV2FybmluZ10gWW91IHNob3VsZCB3
-cml0ZSBhIEZ1bGwgVVJMIC5lLmcgaHR0cDovL3NpdGUuY29tL3BhZ2UucGhwP2lkPXZhbHVlIFxu
-IisgZ2EuZW5kDQoJCQlleGl0KCkNCglpZiB1cmxfb3JfbGlzdCA9PSIyIjoNCgkJIHVybHNfbGlz
-dCA9IHJhd19pbnB1dCggZ2EuZ3JlZW4rIiBbIV0gRW50ZXIgdGhlIGxpc3QgZmlsZSBuYW1lIC5l
-LmcgW2xpc3QudHh0XTogIitnYS5lbmQpDQoJCSBvcGVuX2xpc3QgPSBvcGVuKHVybHNfbGlzdCku
-cmVhZGxpbmVzKCkNCgkJIGZvciBsaW5lIGluIG9wZW5fbGlzdDoNCgkJCSBpZiAiPyIgaW4gbGlu
-ZToNCgkJCSAJbGlua3MgPSBsaW5lLnN0cmlwKCkNCgkJICAJIAl1cmwgPSBsaW5rcw0KCQkgIAkg
-CXByaW50IGdhLmdyZWVuKyIgXG4gWyFdIE5vdyBTY2FubmluZyAlcyIldXJsICtnYS5lbmQNCgkJ
-ICAJIAlyY2VfZnVuYyh1cmwpDQoJCQkgCXhzc19mdW5jKHVybCkNCgkJCSAJZXJyb3JfYmFzZWRf
-c3FsaV9mdW5jKHVybCkNCgkJCSBlbHNlOg0KCQkJIAlsaW5rcyA9IGxpbmUuc3RyaXAoKQ0KCQkg
-IAkgCXVybCA9IGxpbmtzDQoJCQkJcHJpbnQgZ2EucmVkICsiXG4gW1dhcm5pbmddICIrIGdhLmVu
-ZCArIGdhLmJvbGQrIiVzIiV1cmwgK2dhLmVuZCArIGdhLnJlZCArIiBpcyBub3QgYSB2YWxpZCBV
-UkwiK2dhLmVuZAkJCQkNCgkJCQlwcmludCBnYS5yZWQgKyIgW1dhcm5pbmddIFlvdSBzaG91bGQg
-d3JpdGUgYSBGdWxsIFVSTCAuZS5nIGh0dHA6Ly9zaXRlLmNvbS9wYWdlLnBocD9pZD12YWx1ZSBc
-biIrIGdhLmVuZA0KCQkgZXhpdCgpCQkJCQ0KDQp1cmxzX29yX2xpc3QoKQ0KDQoNCg0K
+	    __          __  _     _____                 ____       
+	    \ \        / / | |   |  __ \               |___ \      
+	     \ \  /\  / /__| |__ | |__) |_      ___ __   __) |_ __ 
+	      \ \/  \/ / _ \ '_ \|  ___/\ \ /\ / / '_ \ |__ <| '__|
+ 	       \  /\  /  __/ |_) | |     \ V  V /| | | |___) | |   
+ 	        \/  \/ \___|_.__/|_|      \_/\_/ |_| |_|____/|_|   
+                                                    
+        ##############################################################
+        #| "AutoScanWeb" Web Applications Security Scanner           #
+        #|  By Ev!L-Xid & G-Force                                    #
+        #|  Versi ini Supports Remote Code/Command Execution, XSS    #
+        #|  Dan SQL Injection.                                       #
+	    #|  Thanks://Jiun //Vinz'Sky //Mine7 //TuanDestroy // Mr Riy #
+	    #|  More Details: http://ghostsec-down.blogspot.com/         #
+        ##############################################################
+        '''+ga.end
+
+def urls_or_list():
+	url_or_list = raw_input(" [!] Scan URL or List of URLs? [1/2]: ")
+	if url_or_list == "1":
+	 	 url = raw_input(" [!] Enter the URL: ")
+		 #if not url.startswith("http://"):
+		     #Thanks to Nu11 for the HTTP checker
+                     #print ga.red+'''\n Invalid URL, Please Make Sure That The URL Starts With \"http://\" \n'''+ga.end
+                     #exit()
+		 if "?" in url:
+		 	rce_func(url)
+		 	xss_func(url)
+		 	error_based_sqli_func(url)
+		 else:
+			print ga.red +"\n [Warning] "+ ga.end + ga.bold+"%s"%url +ga.end + ga.red +" is not a valid URL"+ga.end			
+			print ga.red +" [Warning] You should write a Full URL .e.g http://site.com/page.php?id=value \n"+ ga.end
+			exit()
+	if url_or_list =="2":
+		 urls_list = raw_input( ga.green+" [!] Enter the list file name .e.g [list.txt]: "+ga.end)
+		 open_list = open(urls_list).readlines()
+		 for line in open_list:
+			 if "?" in line:
+			 	links = line.strip()
+		  	 	url = links
+		  	 	print ga.green+" \n [!] Now Scanning %s"%url +ga.end
+		  	 	rce_func(url)
+			 	xss_func(url)
+			 	error_based_sqli_func(url)
+			 else:
+			 	links = line.strip()
+		  	 	url = links
+				print ga.red +"\n [Warning] "+ ga.end + ga.bold+"%s"%url +ga.end + ga.red +" is not a valid URL"+ga.end				
+				print ga.red +" [Warning] You should write a Full URL .e.g http://site.com/page.php?id=value \n"+ ga.end
+		 exit()				
+
+urls_or_list()
+
+
+
