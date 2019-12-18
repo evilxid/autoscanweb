@@ -21,8 +21,8 @@ print ga.green+'''
         #|  By Ev!L-Xid & G-Force                                    #
         #|  Versi ini Supports Remote Code/Command Execution, XSS    #
         #|  Dan SQL Injection.                                       #
-	    #|  Thanks://Jiun //Vinz'Sky //Mine7 //TuanDestroy // Mr Riy #
-	    #|  More Details: http://ghostsec-down.blogspot.com/         #
+        #|  Thanks://Jiun //Vinz'Sky //Mine7 //TuanDestroy // Mr Riy #
+	#|  More Details: http://ghostsec-down.blogspot.com/         #
         ##############################################################
         '''+ga.end
 
