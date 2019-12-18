@@ -1,49 +1,30 @@
-#!/usr/bin/env python
-# WebPwn3r is a Web Applications Security Scanner
-# By Ebrahim Hegazy - twitter.com/zigoo0
-# First demo conducted 12Apr-2014 @OWASP Chapter Egypt
-# https://www.owasp.org/index.php/Cairo
-import urllib
-import re
-import time
-from urllib import FancyURLopener
-
-class colors:
-        def __init__(self):
-                self.green = "\033[92m"
-                self.blue = "\033[94m"
-                self.bold = "\033[1m"
-                self.yellow = "\033[93m"
-                self.red = "\033[91m"
-                self.end = "\033[0m"
-ga = colors()
-
-class UserAgent(FancyURLopener):
-	version = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0'
-
-useragent = UserAgent()
-
-class HTTP_HEADER:
-    HOST = "Host"
-    SERVER = "Server"
-
-def headers_reader(url):
-	# This function will print the server headers such as WebServer OS & Version.
-	print ga.bold+" \n [!] Fingerprinting the backend Technologies."+ga.end
-	opener = urllib.urlopen(url)
-	if opener.code == 200:
-		 print ga.green+" [!] Status code: 200 OK"+ga.end
-	if opener.code == 404:
-		 print ga.red+" [!] Page was not found! Please check the URL \n"+ga.end
-		 exit()
-	#Host = opener.headers.get(HTTP_HEADER.HOST)
-	Server = opener.headers.get(HTTP_HEADER.SERVER)
-	# HOST will split the HostName from the URL
-	Host = url.split("/")[2]
-	print ga.green+" [!] Host: " + str(Host) +ga.end
-	print ga.green+" [!] WebServer: " + str(Server) +ga.end
-	for item in opener.headers.items():
-	    for powered in item:
-		sig = "x-powered-by"		
-		if sig in item:
-		    print ga.green+ " [!] " + str(powered).strip() + ga.end
+IyEvdXNyL2Jpbi9lbnYgcHl0aG9uDQojIFdlYlB3bjNyIGlzIGEgV2ViIEFwcGxpY2F0aW9ucyBT
+ZWN1cml0eSBTY2FubmVyDQojIEJ5IEVicmFoaW0gSGVnYXp5IC0gdHdpdHRlci5jb20vemlnb28w
+DQojIEZpcnN0IGRlbW8gY29uZHVjdGVkIDEyQXByLTIwMTQgQE9XQVNQIENoYXB0ZXIgRWd5cHQN
+CiMgaHR0cHM6Ly93d3cub3dhc3Aub3JnL2luZGV4LnBocC9DYWlybw0KaW1wb3J0IHVybGxpYg0K
+aW1wb3J0IHJlDQppbXBvcnQgdGltZQ0KZnJvbSB1cmxsaWIgaW1wb3J0IEZhbmN5VVJMb3BlbmVy
+DQoNCmNsYXNzIGNvbG9yczoNCiAgICAgICAgZGVmIF9faW5pdF9fKHNlbGYpOg0KICAgICAgICAg
+ICAgICAgIHNlbGYuZ3JlZW4gPSAiXDAzM1s5Mm0iDQogICAgICAgICAgICAgICAgc2VsZi5ibHVl
+ID0gIlwwMzNbOTRtIg0KICAgICAgICAgICAgICAgIHNlbGYuYm9sZCA9ICJcMDMzWzFtIg0KICAg
+ICAgICAgICAgICAgIHNlbGYueWVsbG93ID0gIlwwMzNbOTNtIg0KICAgICAgICAgICAgICAgIHNl
+bGYucmVkID0gIlwwMzNbOTFtIg0KICAgICAgICAgICAgICAgIHNlbGYuZW5kID0gIlwwMzNbMG0i
+DQpnYSA9IGNvbG9ycygpDQoNCmNsYXNzIFVzZXJBZ2VudChGYW5jeVVSTG9wZW5lcik6DQoJdmVy
+c2lvbiA9ICdNb3ppbGxhLzUuMCAoV2luZG93cyBOVCA2LjE7IFdPVzY0OyBydjoyMi4wKSBHZWNr
+by8yMDEwMDEwMSBGaXJlZm94LzIyLjAnDQoNCnVzZXJhZ2VudCA9IFVzZXJBZ2VudCgpDQoNCmNs
+YXNzIEhUVFBfSEVBREVSOg0KICAgIEhPU1QgPSAiSG9zdCINCiAgICBTRVJWRVIgPSAiU2VydmVy
+Ig0KDQpkZWYgaGVhZGVyc19yZWFkZXIodXJsKToNCgkjIFRoaXMgZnVuY3Rpb24gd2lsbCBwcmlu
+dCB0aGUgc2VydmVyIGhlYWRlcnMgc3VjaCBhcyBXZWJTZXJ2ZXIgT1MgJiBWZXJzaW9uLg0KCXBy
+aW50IGdhLmJvbGQrIiBcbiBbIV0gRmluZ2VycHJpbnRpbmcgdGhlIGJhY2tlbmQgVGVjaG5vbG9n
+aWVzLiIrZ2EuZW5kDQoJb3BlbmVyID0gdXJsbGliLnVybG9wZW4odXJsKQ0KCWlmIG9wZW5lci5j
+b2RlID09IDIwMDoNCgkJIHByaW50IGdhLmdyZWVuKyIgWyFdIFN0YXR1cyBjb2RlOiAyMDAgT0si
+K2dhLmVuZA0KCWlmIG9wZW5lci5jb2RlID09IDQwNDoNCgkJIHByaW50IGdhLnJlZCsiIFshXSBQ
+YWdlIHdhcyBub3QgZm91bmQhIFBsZWFzZSBjaGVjayB0aGUgVVJMIFxuIitnYS5lbmQNCgkJIGV4
+aXQoKQ0KCSNIb3N0ID0gb3BlbmVyLmhlYWRlcnMuZ2V0KEhUVFBfSEVBREVSLkhPU1QpDQoJU2Vy
+dmVyID0gb3BlbmVyLmhlYWRlcnMuZ2V0KEhUVFBfSEVBREVSLlNFUlZFUikNCgkjIEhPU1Qgd2ls
+bCBzcGxpdCB0aGUgSG9zdE5hbWUgZnJvbSB0aGUgVVJMDQoJSG9zdCA9IHVybC5zcGxpdCgiLyIp
+WzJdDQoJcHJpbnQgZ2EuZ3JlZW4rIiBbIV0gSG9zdDogIiArIHN0cihIb3N0KSArZ2EuZW5kDQoJ
+cHJpbnQgZ2EuZ3JlZW4rIiBbIV0gV2ViU2VydmVyOiAiICsgc3RyKFNlcnZlcikgK2dhLmVuZA0K
+CWZvciBpdGVtIGluIG9wZW5lci5oZWFkZXJzLml0ZW1zKCk6DQoJICAgIGZvciBwb3dlcmVkIGlu
+IGl0ZW06DQoJCXNpZyA9ICJ4LXBvd2VyZWQtYnkiCQkNCgkJaWYgc2lnIGluIGl0ZW06DQoJCSAg
+ICBwcmludCBnYS5ncmVlbisgIiBbIV0gIiArIHN0cihwb3dlcmVkKS5zdHJpcCgpICsgZ2EuZW5k
+DQo=
